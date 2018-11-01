@@ -63,7 +63,7 @@ const getOnePublisher = Promise.method((id) => {
   const mongoClient = databases.mongodb[settings.get('MONGO_MAIN_NAME')]
 
   if (!isString(id) || size(id) !== 24) {
-    throw new Error('wrong id')
+    throw new Error('Publisher is not correct')
   }
 
   return mongoClient.db().collection('publishers')
