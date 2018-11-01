@@ -10,7 +10,9 @@ nconf
   .defaults({
     'PORT': 8000,
     'MONGO_MAIN_NAME': 'notsteam',
-    'MONGO_MAIN_URL': 'mongodb://mongodb:27017/notsteam'
+    'MONGO_MAIN_URL': 'mongodb://mongodb:27017/notsteam',
+    'PUBLISHERS_LIMIT': 50,
+    'GAMES_LIMIT': 30
   })
 
 module.exports = nconf
