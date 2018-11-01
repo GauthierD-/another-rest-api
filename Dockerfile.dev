@@ -1,0 +1,3 @@
+FROM another-rest-api
+
+RUN npm install --only=dev --no-package-lock
