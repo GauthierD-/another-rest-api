@@ -1,8 +1,8 @@
 'use strict'
 
 const Promise = require('bluebird')
+const { isString } = require('lodash')
 const { ObjectID } = require('mongodb')
-const { isString, size } = require('lodash')
 
 const settings = require('../../config')
 const { databases } = require('../lib/databases')
@@ -61,10 +61,6 @@ const insertPublisher = Promise.method((publisher) => {
  */
 const getOnePublisher = Promise.method((id) => {
   const mongoClient = databases.mongodb[settings.get('MONGO_MAIN_NAME')]
-
-  if (!isString(id) || size(id) !== 24) {
-    throw new Error('Publisher is not correct')
-  }
 
   return mongoClient.db().collection('publishers')
     .findOne({ _id: new ObjectID(id) })

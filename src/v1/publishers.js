@@ -1,6 +1,7 @@
 'use strict'
 
 const express = require('express')
+const { ObjectID } = require('mongodb')
 const { pick, isString, isNumber } = require('lodash')
 
 const router = express.Router()
@@ -20,6 +21,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
+  if (!isString(req.params.id) || !ObjectID.isValid(req.params.id)) {
+    throw new Error('400 - PublisherID is not correct')
+  }
+
   return getOnePublisher(req.params.id)
     .then((result) => {
       return res.json({ data: result })
