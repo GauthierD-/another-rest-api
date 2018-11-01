@@ -13,7 +13,7 @@ const { databases } = require('../lib/databases')
  * @params {Object} query
  * @params {String} query.name
  *
- * @returns {Promise<Array>}
+ * @returns {Promise<Publisher[]|Error>}
  */
 const getPublishers = Promise.method(({ name }) => {
   const mongoClient = databases.mongodb[settings.get('MONGO_MAIN_NAME')]
@@ -36,7 +36,7 @@ const getPublishers = Promise.method(({ name }) => {
  * @param {Number} publisher.siret
  * @param {Number} publisher.phone
  *
- * @returns {Promise<boolean>}
+ * @returns {Promise<Boolean|Error>}
  */
 const insertPublisher = Promise.method((publisher) => {
   const mongoClient = databases.mongodb[settings.get('MONGO_MAIN_NAME')]
@@ -57,7 +57,7 @@ const insertPublisher = Promise.method((publisher) => {
  *
  * @param {String} id
  *
- * @returns {Promise<Object>}
+ * @returns {Promise<Object|Error>}
  */
 const getOnePublisher = Promise.method((id) => {
   const mongoClient = databases.mongodb[settings.get('MONGO_MAIN_NAME')]
