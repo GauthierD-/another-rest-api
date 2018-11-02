@@ -22,15 +22,11 @@ const secretProcess = Promise.method(() => {
     gamesCollection.deleteMany({
       releaseDate: { $lt: eighteenMonthAgo }
     }),
-    gamesCollection.aggregate([
-      { $match: { releaseDate: { $gt: eighteenMonthAgo, $lt: twelveMonthsAgo } } }
-      // multiply()
-      // divide
-    ])
+    gamesCollection.updateMany(
+      { releaseDate: { $gt: eighteenMonthAgo, $lt: twelveMonthsAgo } },
+      { $mul: { price: 0.8 } }
+    )
   ])
-    .then(() => {
-      // All done
-    })
 })
 
 module.exports = {
