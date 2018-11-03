@@ -30,6 +30,7 @@ You have to generate a 'save' event inside src folder to reload another-rest-api
 HTTP Method | Entry point | Description | Body
 ----------- | ----------- | ----------- | ----
 [GET] | `/v1/publishers` | Get all publishers |
+[GET] | `/v1/publishers?name=zelda` | Get all publishers that contains `zelda` |
 [GET] | `/v1/publishers/:id` | Get one publisher by ID | 
 [POST] | `/v1/publishers` | Create publisher | ```{ name: string; siret: number; phone: number }```
 
