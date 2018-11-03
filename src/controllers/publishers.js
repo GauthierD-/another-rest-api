@@ -20,7 +20,8 @@ const getPublishers = Promise.method(({ name }) => {
 
   let query = {}
   if (isString(name)) {
-    query.name = { $regex: `${name}`, $options: 'i' }
+    // regex: contains
+    query.name = { $regex: `.*${name}*.`, $options: 'i' }
   }
 
   return mongoClient.db().collection('publishers')
