@@ -1,0 +1,13 @@
+version: "3"
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    command: ["npm", "test"]
+    volumes:
+      - ./config:/home/node/config
+      - ./etc:/home/node/etc
+      - ./src:/home/node/src
+      - ./test:/home/node/test
+      - ./coverage:/home/node/coverage
