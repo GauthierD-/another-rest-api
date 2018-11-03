@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "standard",
     "pretest": "npm run lint",
-    "test": "nyc tape test/*.js",
+    "test": "nyc tape test/**/*.js | tap-spec",
     "start": "node src/index.js",
     "dev": "nodemon --watch src --watch config --watch etc src/index.js"
   },

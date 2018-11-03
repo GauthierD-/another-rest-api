@@ -2,7 +2,6 @@
 
 const Promise = require('bluebird')
 const { ObjectID } = require('mongodb')
-const { isString, size } = require('lodash')
 
 const settings = require('../../config')
 const { databases } = require('../lib/databases')
@@ -29,10 +28,6 @@ const getGames = Promise.method(() => {
  */
 const getOneGame = Promise.method((id) => {
   const mongoClient = databases.mongodb[settings.get('MONGO_MAIN_NAME')]
-
-  if (!isString(id) || size(id) !== 24) {
-    throw new Error('wrong id')
-  }
 
   return mongoClient.db().collection('games')
     .findOne({ _id: new ObjectID(id) })

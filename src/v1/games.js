@@ -25,6 +25,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
+  if (!isString(req.params.id) || !ObjectID.isValid(req.params.id)) {
+    throw new Error('400 - GameID is not correct')
+  }
+
   return getOneGame(req.params.id)
     .then((result) => {
       return res.json({ data: result })

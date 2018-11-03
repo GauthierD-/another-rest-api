@@ -11,6 +11,7 @@ docker-compose -f docker-compose.dev.yml up
 ```
 
 ## Run tests
+/!\ need moar tests /!\
 ```cli
 docker-compose -f docker-compose.test.yml up
 ```
