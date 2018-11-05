@@ -29,8 +29,8 @@ const secretProcess = Promise.method(() => {
   ])
     .then(([ firstProcess, secondProcess ]) => {
       return {
-        deletedLines: firstProcess.result.n,
-        updatedLines: secondProcess.result.nModified
+        deletedLines: (firstProcess && firstProcess.result && firstProcess.result.n) || 0,
+        updatedLines: (secondProcess && secondProcess.result && firstProcess.result.nModified) || 0
       }
     })
 })

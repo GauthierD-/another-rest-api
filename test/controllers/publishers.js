@@ -18,17 +18,17 @@ class DatabaseStub {
   }
 }
 
-const Games = proxyquire('../../src/controllers/games', {
+const Publishers = proxyquire('../../src/controllers/publishers', {
   '../lib/class_database': DatabaseStub
 })
 
-test('[GAMES] - getGames - should throw an Error if mongo fail', (assert) => {
+test('[Publishers] - getPublishers - should throw an Error if mongo fail', (assert) => {
   assert.plan(1)
   toArrayStub.resetHistory()
   toArrayStub.rejects(new Error('TOARRAYERROR'))
 
-  const myGames = new Games()
-  myGames.getGames()
+  const myPublishers = new Publishers()
+  myPublishers.getPublishers()
     .then(() => {
       assert.end('SHOULD NOT RESOLVES')
     })
@@ -37,14 +37,14 @@ test('[GAMES] - getGames - should throw an Error if mongo fail', (assert) => {
     })
 })
 
-test('[GAMES] - getGames - should works and call find() with toArray()', (assert) => {
+test('[Publishers] - getPublishers - should works and call find() with toArray()', (assert) => {
   assert.plan(1)
 
   toArrayStub.resetHistory()
   toArrayStub.resolves()
 
-  const myGames = new Games()
-  myGames.getGames()
+  const myPublishers = new Publishers()
+  myPublishers.getPublishers()
     .then(() => {
       assert.ok(toArrayStub.called)
     })

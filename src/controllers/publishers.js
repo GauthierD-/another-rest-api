@@ -1,6 +1,5 @@
 'use strict'
 
-const { isString } = require('lodash')
 const { ObjectID } = require('mongodb')
 
 const settings = require('../../config')
@@ -16,20 +15,11 @@ class Publishers {
   /**
    * getPublishers
    *
-   * @params {Object} query
-   * @params {String} query.name
-   *
    * @returns {Promise<Publisher[]|Error>}
    */
-  getPublishers ({ name }) {
-    let query = {}
-    if (isString(name)) {
-      // regex: contains
-      query.name = { $regex: `.*${name}*.`, $options: 'i' }
-    }
-
+  getPublishers () {
     return this.collection()
-      .find(query, { limit: settings.get('PUBLISHERS_LIMIT') })
+      .find({}, { limit: settings.get('PUBLISHERS_LIMIT') })
       .toArray()
   }
 
