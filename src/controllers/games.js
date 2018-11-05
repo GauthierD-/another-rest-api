@@ -4,8 +4,10 @@ const { ObjectID } = require('mongodb')
 
 const settings = require('../../config')
 const Database = require('../lib/class_database')
+const Publishers = require('./publishers')
 
 const myDb = new Database()
+const myPublishers = new Publishers()
 
 class Games {
   constructor () {
@@ -33,6 +35,12 @@ class Games {
   getOneGame (id) {
     return this.collection()
       .findOne({ _id: new ObjectID(id) })
+      .then((game) => {
+        return Promise.all([game, myPublishers.getOnePublisher(game.publisher)])
+      })
+      .then(([ game, publisher ]) => {
+        return Object.assign({}, game, { publisher })
+      })
   }
 
   /**

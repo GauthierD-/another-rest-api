@@ -4,16 +4,13 @@ const express = require('express')
 const { ObjectID } = require('mongodb')
 const { pick, isString, isNumber } = require('lodash')
 
+const Publishers = require('../controllers/publishers')
+
+const myPublishers = new Publishers()
 const router = express.Router()
 
-const {
-  getPublishers,
-  insertPublisher,
-  getOnePublisher
-} = require('../controllers/publishers')
-
 router.get('/', (req, res, next) => {
-  return getPublishers(req.query)
+  return myPublishers.getPublishers(req.query)
     .then((result) => {
       return res.json({ data: result })
     })
@@ -25,7 +22,7 @@ router.get('/:id', (req, res, next) => {
     throw new Error('400 - PublisherID is not correct')
   }
 
-  return getOnePublisher(req.params.id)
+  return myPublishers.getOnePublisher(req.params.id)
     .then((result) => {
       return res.json({ data: result })
     })
@@ -45,7 +42,7 @@ router.post('/', (req, res, next) => {
 
   const publisher = pick(req.body, ['name', 'siret', 'phone'])
 
-  return insertPublisher(publisher)
+  return myPublishers.insertPublisher(publisher)
     .then((result) => {
       return res.json({ data: result })
     })
