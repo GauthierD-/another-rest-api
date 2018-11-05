@@ -1,4 +1,6 @@
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
+[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard) 
+
+[![CircleCI](https://circleci.com/gh/GauthierD-/another-rest-api/tree/master.svg?style=svg)](https://circleci.com/gh/GauthierD-/another-rest-api/tree/master)
 
 
 # another-rest-api
