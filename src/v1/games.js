@@ -3,21 +3,18 @@
 const express = require('express')
 const { ObjectID } = require('mongodb')
 const isValid = require('date-fns/is_valid')
+const Games = require('../controllers/games')
+const Publishers = require('../controllers/publishers')
 const { pick, isString, isNumber, isArray } = require('lodash')
 
+const myGames = new Games()
+const myPublishers = new Publishers()
 const router = express.Router()
 
-const {
-  getGames,
-  getOneGame,
-  insertGame,
-  updateGame,
-  deleteGame
-} = require('../controllers/games')
-const { getOnePublisher } = require('../controllers/publishers')
+// const { getOnePublisher } = require('../controllers/publishers')
 
 router.get('/', (req, res, next) => {
-  return getGames()
+  return myGames.getGames()
     .then((result) => {
       return res.json({ data: result })
     })
@@ -29,7 +26,7 @@ router.get('/:id', (req, res, next) => {
     throw new Error('400 - GameID is not correct')
   }
 
-  return getOneGame(req.params.id)
+  return myGames.getOneGame(req.params.id)
     .then((result) => {
       return res.json({ data: result })
     })
@@ -57,14 +54,14 @@ router.post('/', (req, res, next) => {
   game = Object.assign({}, game, { releaseDate: new Date(game.releaseDate) })
 
   // create game only if publisher exists
-  return getOnePublisher(game.publisher)
+  return myPublishers.getOnePublisher(game.publisher)
     .then((result) => {
       if (!result) {
         throw new Error(`Publisher ${game.publisher} does not exist`)
       }
     })
     .then(() => {
-      return insertGame(game)
+      return myGames.insertGame(game)
         .then((result) => {
           return res.json({ data: result })
         })
@@ -96,7 +93,7 @@ router.patch('/:id', (req, res, next) => {
 
   let waitFor = Promise.resolve()
   if (publisher) {
-    waitFor = getOnePublisher(publisher)
+    waitFor = myPublishers.getOnePublisher(publisher)
       .then((result) => {
         if (!result) {
           throw new Error(`Publisher ${publisher} does not exist`)
@@ -113,7 +110,7 @@ router.patch('/:id', (req, res, next) => {
         updateData = Object.assign({}, updateData, { releaseDate: new Date(updateData.releaseDate) })
       }
 
-      return updateGame({ id: req.params.id, updateData })
+      return myGames.updateGame({ id: req.params.id, updateData })
     })
     .then((result) => {
       return res.json({ data: result })
@@ -126,7 +123,7 @@ router.delete('/:id', (req, res, next) => {
     throw new Error('400 - GameID is not correct')
   }
 
-  return deleteGame({ id: req.params.id })
+  return myGames.deleteGame({ id: req.params.id })
     .then((result) => {
       res.json({ data: result })
     })

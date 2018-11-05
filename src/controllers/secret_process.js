@@ -3,8 +3,9 @@
 const Promise = require('bluebird')
 const subMonths = require('date-fns/sub_months')
 
-const settings = require('../../config')
-const { databases } = require('../lib/databases')
+const Database = require('../lib/class_database')
+
+const myDb = new Database()
 
 /**
  * secretProcess
@@ -12,8 +13,7 @@ const { databases } = require('../lib/databases')
  * @returns {Promise<>}
  */
 const secretProcess = Promise.method(() => {
-  const mongoClient = databases.mongodb[settings.get('MONGO_MAIN_NAME')]
-  const gamesCollection = mongoClient.db().collection('games')
+  const gamesCollection = myDb.client.db().collection('games')
 
   const eighteenMonthAgo = subMonths(new Date(), 18)
   const twelveMonthsAgo = subMonths(new Date(), 12)
@@ -27,6 +27,12 @@ const secretProcess = Promise.method(() => {
       { $mul: { price: 0.8 } }
     )
   ])
+    .then(([ firstProcess, secondProcess ]) => {
+      return {
+        deletedLines: firstProcess.result.n,
+        updatedLines: secondProcess.result.nModified
+      }
+    })
 })
 
 module.exports = {
