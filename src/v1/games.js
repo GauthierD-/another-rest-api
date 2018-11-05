@@ -11,8 +11,6 @@ const myGames = new Games()
 const myPublishers = new Publishers()
 const router = express.Router()
 
-// const { getOnePublisher } = require('../controllers/publishers')
-
 router.get('/', (req, res, next) => {
   return myGames.getGames()
     .then((result) => {
