@@ -9,13 +9,15 @@ const bodyParser = require('body-parser')
 
 const log = require('./lib/log')
 const settings = require('../config')
+const Database = require('./lib/class_database')
 const errorHandler = require('./middlewares/error_handler')
-const { mongoConnect, cleanDatabases } = require('./lib/databases')
 
 const apiV1 = require('./v1')
 
+const myDb = new Database()
+
 const connectDb = {
-  MAIN_DB: mongoConnect(settings.get('MONGO_MAIN_URL'))
+  MAIN_DB: myDb.connect(settings.get('MONGO_MAIN_URL'))
 }
 
 Promise.props(connectDb)
@@ -67,7 +69,7 @@ function gracefullExit (error) {
   }
 
   return Promise.all([
-    cleanDatabases()
+    myDb.disconnect()
   ])
     .then(() => process.exit(0))
 }

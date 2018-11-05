@@ -11,8 +11,8 @@ router.get('/', (req, res, next) => {
 
 router.post('/', (req, res, next) => {
   return secretProcess()
-    .then(() => {
-      return res.json({ data: 'Well done!' })
+    .then((result) => {
+      return res.json({ data: result })
     })
     .catch(next)
 })
