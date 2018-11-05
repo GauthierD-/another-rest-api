@@ -17,7 +17,7 @@ docker-compose -f docker-compose.test.yml up
 ```
 
 ### /!\ Warning /!\
-Something mongodb service is not up when our application try to connect on DB.  
+Sometimes mongodb service is not up when our application try to connect on DB.  
 You have to generate a 'save' event inside src folder to reload another-rest-api.
 
 
