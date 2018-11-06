@@ -19,21 +19,16 @@ jobs:
     steps:
       - checkout
 
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      - run:
+          name: Build docker image
+          command: |
+            docker build -t another-rest-api .
 
-      - run: npm install
-
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-        
-      # run tests!
-      - run: npm run test
-
+      - run:
+          name: Run unit test
+          command: |
+            mkdir -p coverage
+            chmod 777 coverage
+            docker-compose -f docker-compose.test.yml build
+            docker-compose -f docker-compose.test.yml up 
 
