@@ -29,7 +29,6 @@ Promise.props(connectDb)
     app.use('*', morgan(':method :url :status - :remote-user :remote-addr - in :response-time ms'))
     app.use(cors({ maxAge: 10 * 60 }))
     app.use(bodyParser.json())
-    app.use(helmet())
 
     app.use('/health', (req, res) => {
       res.json({ ok: true })
